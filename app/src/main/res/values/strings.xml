@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Blue Chat</string>
+    <string name="welcome_text">Welcome to Blue Chat</string>
+    <string name="create_a_new_account">Create a New Account</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_password">Password</string>
+    <string name="reg_display_name">Display Name</string>
+    <string name="create_account_btn">CREATE ACCOUNT</string>
+    <string name="log_out_menu">Log Out</string>
+    <string name="login_to_your_account">Login to your Account</string>
+    <string name="login_btn">Login</string>
+    <string name="login_to_account">Sign In</string>
+</resources>
