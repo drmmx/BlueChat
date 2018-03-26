@@ -10,5 +10,9 @@
     <string name="login_to_your_account">Login to your Account</string>
     <string name="login_btn">Login</string>
     <string name="login_to_account">Sign In</string>
+    <string name="display_name_settings">Display Name</string>
+    <string name="status_settings">I`m ♥♥♥ here!</string>
+    <string name="change_image_settings">Change Image</string>
+    <string name="change_status_settings">Change Status</string>
 
 </resources>
