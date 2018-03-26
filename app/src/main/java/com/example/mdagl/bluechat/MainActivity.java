@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.main_logout_btn) {
             FirebaseAuth.getInstance().signOut();
             sendToStart();
+        } else if (item.getItemId() == R.id.new_blank_activity) {
+            Intent intent = new Intent(this, EmptyActivity.class);
+            startActivity(intent);
         }
 
         return true;

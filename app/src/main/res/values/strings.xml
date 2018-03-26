@@ -14,5 +14,6 @@
     <string name="status_settings">I`m ♥♥♥ here!</string>
     <string name="change_image_settings">Change Image</string>
     <string name="change_status_settings">Change Status</string>
+    <string name="new_message_blank_activity">New Message</string>
 
 </resources>

@@ -22,11 +22,13 @@
         <activity android:name=".StartActivity" />
         <activity
             android:name=".RegisterActivity"
-            android:parentActivityName=".StartActivity"></activity>
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".LoginActivity"
-            android:parentActivityName=".StartActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
+            android:parentActivityName=".StartActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".EmptyActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
