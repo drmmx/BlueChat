@@ -25,15 +25,16 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "My tag";
+
     private TextInputLayout mDisplayName;
     private TextInputLayout mEmail;
     private TextInputLayout mPassword;
     private Button mCreateAccountBtn;
 
-    private FirebaseAuth mAuth;
-
     private Toolbar mToolbar;
 
+    //Firebase
+    private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
 
     @Override

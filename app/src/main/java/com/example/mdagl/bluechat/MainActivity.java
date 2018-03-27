@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Firebase
     private FirebaseAuth mAuth;
 
     private Toolbar mToolbar;
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             sendToStart();
         } else if (item.getItemId() == R.id.new_blank_activity) {
             Intent intent = new Intent(this, EmptyActivity.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.main_settings_btn) {
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
 

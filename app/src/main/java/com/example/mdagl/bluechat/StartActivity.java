@@ -16,7 +16,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        mRegBtn = (Button) findViewById(R.id.start_reg_button);
+        mRegBtn = (Button) findViewById(R.id.change_image_btn);
         mRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
