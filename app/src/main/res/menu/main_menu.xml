@@ -2,14 +2,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/new_blank_activity"
-        android:icon="@drawable/ic_edit_text"
-        android:title="@string/new_message_blank_activity"
-        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/main_settings_btn"
-        android:title="@string/settings_menu" />
+        android:icon="@drawable/user_settings"
+        android:title="@string/settings_menu"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/all_users_btn"
+        android:title="@string/settings_all_users"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/main_logout_btn"
-        android:title="@string/log_out_menu" />
+        android:title="@string/log_out_menu"
+        app:showAsAction="never"/>
 </menu>

@@ -11,11 +11,16 @@
     <string name="login_btn">Login</string>
     <string name="login_to_account">Sign In</string>
     <string name="display_name_settings">Display Name</string>
-    <string name="status_settings">I`m ♥♥♥ here!</string>
+    <string name="status_settings">I`m here!</string>
     <string name="change_image_settings">Change Image</string>
     <string name="change_status_settings">Change Status</string>
     <string name="new_message_blank_activity">New Message</string>
     <string name="settings_menu">Settings</string>
     <string name="save_changes_btn">Save Changes</string>
+    <string name="settings_all_users">All Users</string>
+    <string name="default_your_status">Your Status</string>
+    <string name="user_name_text">User Name</string>
+    <string name="user_status_text">User Status</string>
+    <string name="online_status">online</string>
 
 </resources>

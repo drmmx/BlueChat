@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabTextColors(R.color.secondaryTextColor, R.color.darkTextColor);
+        TabLayout.Tab tab = mTabLayout.getTabAt(1);
+        tab.select();
     }
 
     @Override
@@ -73,14 +75,13 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.main_logout_btn) {
             FirebaseAuth.getInstance().signOut();
             sendToStart();
-        } else if (item.getItemId() == R.id.new_blank_activity) {
-            Intent intent = new Intent(this, EmptyActivity.class);
-            startActivity(intent);
         } else if (item.getItemId() == R.id.main_settings_btn) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.all_users_btn) {
+            Intent intent = new Intent(this, UsersActivity.class);
+            startActivity(intent);
         }
-
         return true;
     }
 }
