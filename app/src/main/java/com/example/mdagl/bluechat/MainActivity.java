@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabTextColors(R.color.secondaryTextColor, R.color.darkTextColor);
+//        mTabLayout.setTabTextColors(R.color.secondaryTextColor, R.color.darkTextColor);
         TabLayout.Tab tab = mTabLayout.getTabAt(1);
         tab.select();
     }
