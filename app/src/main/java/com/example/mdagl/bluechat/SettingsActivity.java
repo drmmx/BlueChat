@@ -1,6 +1,7 @@
 package com.example.mdagl.bluechat;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.util.Random;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -86,7 +91,9 @@ public class SettingsActivity extends AppCompatActivity {
                 mDisplayName.setText(name);
                 mDisplayStatus.setText(status);
 
-                Picasso.get().load(image).into(mDisplayImage);
+                if (!image.equals("default")) {
+                    Picasso.get().load(image).placeholder(R.drawable.default_user).into(mDisplayImage);
+                }
             }
 
             @Override
@@ -144,22 +151,61 @@ public class SettingsActivity extends AppCompatActivity {
                 //for image name
                 String currentUserId = mCurrentUser.getUid();
 
-                //save image in database as currentUserId.jpg
+                //Compress bitmap thumb and put to Database
+                File thumbFile = new File(resultUri.getPath());
+                Bitmap thumbBitmap = null;
+                try {
+                    thumbBitmap = new Compressor(this)
+                            .setMaxWidth(200)
+                            .setMaxHeight(200)
+                            .setQuality(75)
+                            .compressToBitmap(thumbFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumbBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                final byte[] thumbByte = baos.toByteArray();
+
+
+                //save image and thumb in database as currentUserId.jpg
                 StorageReference filepath = mImageStorage.child("profile_images").child(currentUserId + ".jpg");
+                final StorageReference thumbFilepath = mImageStorage.child("profile_images").child("thumb").child(currentUserId + ".jpg");
+
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
                         if (task.isSuccessful()) {
 
-                            String downloadUrl = task.getResult().getDownloadUrl().toString();
-                            mUserDatabase.child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            final String downloadUrl = task.getResult().getDownloadUrl().toString();
+
+
+                            UploadTask uploadTask = thumbFilepath.putBytes(thumbByte);
+                            uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(SettingsActivity.this, "Success uploading", Toast.LENGTH_LONG).show();
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumbTask) {
+
+                                    String thumbDownloadUrl = thumbTask.getResult().getDownloadUrl().toString();
+
+                                    if (thumbTask.isSuccessful()) {
+                                        Map<String, Object> updateHashMap = new HashMap<>();
+                                        updateHashMap.put("image", downloadUrl);
+                                        updateHashMap.put("thumb_image", thumbDownloadUrl);
+
+                                        mUserDatabase.updateChildren(updateHashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(SettingsActivity.this, "Success uploading image", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Toast.makeText(SettingsActivity.this, "Error uploading image", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+
                                     } else {
-                                        Toast.makeText(SettingsActivity.this, "Error uploading", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SettingsActivity.this, "Error uploading thumbnail", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
@@ -167,7 +213,6 @@ public class SettingsActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(SettingsActivity.this, "Error save image in database", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 });
 

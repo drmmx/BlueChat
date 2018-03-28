@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LiveChatFragment extends Fragment {
+public class FriendsFragment extends Fragment {
 
 
-    public LiveChatFragment() {
+    public FriendsFragment() {
         // Required empty public constructor
     }
 
