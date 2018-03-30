@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 
@@ -80,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = currentUser.getUid();
+                            String deviceToken = FirebaseInstanceId.getInstance().getToken();
 
                             mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
                             HashMap<String, String> userMap = new HashMap<>();
@@ -87,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                             userMap.put("status", "Hi there, I`m using Blue Chat");
                             userMap.put("image", "default");
                             userMap.put("thumb_image", "default");
+                            userMap.put("device_token", deviceToken);
 
                             mDatabaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
