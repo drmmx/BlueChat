@@ -33,7 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseReference mRootRef;
 
-    String mUserId;
     private String mCurrentState; //request status
 
     @Override
@@ -41,10 +40,11 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mUserId = getIntent().getStringExtra("user_id");
+        final String mUserId = getIntent().getStringExtra("user_id");
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mUserId);
+        mUsersDatabase.keepSynced(true);
         mRootRef = FirebaseDatabase.getInstance().getReference();
 
 
@@ -245,6 +245,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
         mDeclineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,4 +278,16 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        mRootRef.child("Users").child(mCurrentUser.getUid()).child("online").setValue(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mRootRef.child("Users").child(mCurrentUser.getUid()).child("online").setValue(false);
+    }*/
 }

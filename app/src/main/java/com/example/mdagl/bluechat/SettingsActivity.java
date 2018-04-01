@@ -89,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue().toString();
                 final String image = dataSnapshot.child("image").getValue().toString();
                 String status = dataSnapshot.child("status").getValue().toString();
-                String thumbImage = dataSnapshot.child("thumb_image").getValue().toString();
+                final String thumbImage = dataSnapshot.child("thumbImage").getValue().toString();
 
                 mDisplayName.setText(name);
                 mDisplayStatus.setText(status);
@@ -182,7 +182,6 @@ public class SettingsActivity extends AppCompatActivity {
                 thumbBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 final byte[] thumbByte = baos.toByteArray();
 
-
                 //save image and thumb in database as currentUserId.jpg
                 StorageReference filepath = mImageStorage.child("profile_images").child(currentUserId + ".jpg");
                 final StorageReference thumbFilepath = mImageStorage.child("profile_images").child("thumb").child(currentUserId + ".jpg");
@@ -195,7 +194,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                             final String downloadUrl = task.getResult().getDownloadUrl().toString();
 
-
                             UploadTask uploadTask = thumbFilepath.putBytes(thumbByte);
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -206,7 +204,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     if (thumbTask.isSuccessful()) {
                                         Map<String, Object> updateHashMap = new HashMap<>();
                                         updateHashMap.put("image", downloadUrl);
-                                        updateHashMap.put("thumb_image", thumbDownloadUrl);
+                                        updateHashMap.put("thumbImage", thumbDownloadUrl);
 
                                         mUserDatabase.updateChildren(updateHashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -236,4 +234,16 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        mUserDatabase.child("online").setValue(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mUserDatabase.child("online").setValue(false);
+    }*/
 }

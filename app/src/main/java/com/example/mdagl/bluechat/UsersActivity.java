@@ -47,6 +47,7 @@ public class UsersActivity extends AppCompatActivity {
         String currentUid = mCurrentUser.getUid();
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mUsersDatabase.keepSynced(true);
 
         mUsersList = (RecyclerView) findViewById(R.id.users_list);
         mUsersList.setHasFixedSize(true);
@@ -56,7 +57,6 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
 
         FirebaseRecyclerOptions<Users> options = new FirebaseRecyclerOptions.Builder<Users>()
                         .setQuery(mUsersDatabase, Users.class)
@@ -96,7 +96,6 @@ public class UsersActivity extends AppCompatActivity {
     public class UsersViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        Context mContext;
 
         UsersViewHolder(View itemView) {
             super(itemView);
@@ -119,5 +118,17 @@ public class UsersActivity extends AppCompatActivity {
             Picasso.get().load(thumbImage).placeholder(R.drawable.default_user).into(userImageView);
         }
     }
+
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        mUsersDatabase.child(mCurrentUser.getUid()).child("online").setValue(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mUsersDatabase.child(mCurrentUser.getUid()).child("online").setValue(false);
+    }*/
 
 }

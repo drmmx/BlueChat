@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                             userMap.put("name", displayNameText);
                             userMap.put("status", "Hi there, I`m using Blue Chat");
                             userMap.put("image", "default");
-                            userMap.put("thumb_image", "default");
+                            userMap.put("thumbImage", "default");
                             userMap.put("device_token", deviceToken);
 
                             mDatabaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {

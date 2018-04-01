@@ -11,11 +11,14 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth;
+    private DatabaseReference mUserRef;
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
 
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
@@ -52,8 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser == null) {
             sendToStart();
-        }
+        }/* else {
+            mUserRef.child("online").setValue(true);
+        }*/
     }
+
+/*    @Override
+    protected void onStop() {
+        super.onStop();
+        mUserRef.child("online").setValue(false);
+    }*/
 
     private void sendToStart() {
         Intent intent = new Intent(this, StartActivity.class);

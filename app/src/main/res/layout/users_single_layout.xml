@@ -47,6 +47,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/online_status"
         android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 

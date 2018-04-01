@@ -22,7 +22,7 @@
     <string name="user_name_text">User Name</string>
     <string name="user_status_text">User Status</string>
     <string name="online_status">online</string>
-
+    <string name="offline_status">offline</string>
     <string name="profile_display_name">Display Name</string>
     <string name="profile_send_request_btn">Send Request</string>
     <string name="profile_total_friends">Total Friends</string>
@@ -31,5 +31,8 @@
     <string name="profile_cancel_friend_request">Cancel Friend Request</string>
     <string name="profile_unfriend_request">Unfriend</string>
     <string name="profile_accept_friend_request">Accept Friend Request</string>
+
+    <string name="channel_name">Friend Request</string>
+    <string name="channel_description">New friend request</string>
 
 </resources>

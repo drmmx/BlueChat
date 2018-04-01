@@ -68,4 +68,16 @@ public class StatusActivity extends AppCompatActivity {
             }
         });
     }
+
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        mStatusDatabase.child("online").setValue(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mStatusDatabase.child("online").setValue(false);
+    }*/
 }
