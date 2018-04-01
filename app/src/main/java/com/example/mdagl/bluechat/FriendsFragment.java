@@ -157,7 +157,7 @@ public class FriendsFragment extends Fragment {
 
             if (onlineStatus.equals("false")) {
                 userOnlineView.setText(R.string.offline_status);
-                userOnlineView.setTextColor(getResources().getColor(R.color.secondaryTextColor));
+                userOnlineView.setTextColor(getResources().getColor(R.color.offlineTextColor));
             } else {
                 userOnlineView.setText(R.string.online_status);
                 userOnlineView.setTextColor(getResources().getColor(R.color.colorPrimary));

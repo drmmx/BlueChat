@@ -33,7 +33,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.default_user)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

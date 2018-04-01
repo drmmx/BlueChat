@@ -18,8 +18,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,7 +47,6 @@ public class UsersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUid = mCurrentUser.getUid();
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mUsersDatabase.keepSynced(true);
@@ -72,10 +74,24 @@ public class UsersActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull UsersViewHolder usersViewHolder, int position, @NonNull Users users) {
+            protected void onBindViewHolder(@NonNull final UsersViewHolder usersViewHolder, int position, @NonNull Users users) {
                 usersViewHolder.setName(users.getName());
                 usersViewHolder.setStatus(users.getStatus());
                 usersViewHolder.setUserImage(users.getThumbImage());
+
+                mUsersDatabase.child(mCurrentUser.getUid()).child("online").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String userOnline = dataSnapshot.getValue().toString();
+                        usersViewHolder.setUserOnlineStatus(userOnline);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
 
                 final String userId = getRef(position).getKey();
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +132,18 @@ public class UsersActivity extends AppCompatActivity {
 
             CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_circle_image_view);
             Picasso.get().load(thumbImage).placeholder(R.drawable.default_user).into(userImageView);
+        }
+
+        public void setUserOnlineStatus(String onlineStatus) {
+            TextView userOnlineView = (TextView) mView.findViewById(R.id.user_online_status);
+
+            if (onlineStatus.equals("false")) {
+                userOnlineView.setText(R.string.offline_status);
+                userOnlineView.setTextColor(getResources().getColor(R.color.offlineTextColor));
+            } else {
+                userOnlineView.setText(R.string.online_status);
+                userOnlineView.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
         }
     }
 

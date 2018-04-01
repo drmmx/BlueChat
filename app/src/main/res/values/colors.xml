@@ -8,5 +8,5 @@
     <color name="darkTextColor">#111111</color>
     <color name="lightTextColor">#f6f6f6</color>
     <color name="secondaryTextColor">#99b4d2</color>
-    <color name="offlineTextColor">#eeeeee</color>
+    <color name="offlineTextColor">#cccccc</color>
 </resources>
