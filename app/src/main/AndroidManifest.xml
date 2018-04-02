@@ -7,18 +7,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".BlueChat"
         android:allowBackup="true"
         android:icon="@drawable/default_user"
         android:label="@string/app_name"
         android:roundIcon="@drawable/default_user"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".BlueChat">
-
-        <service
-            android:name=".FirebaseMessagingService">
+        android:theme="@style/AppTheme">
+        <service android:name=".FirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -53,9 +51,14 @@
         </activity>
         <activity android:name=".ProfileActivity">
             <intent-filter>
-                <action android:name="com.example.mdagl.bluechat_TARGET_NOTIFICATION"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="com.example.mdagl.bluechat_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

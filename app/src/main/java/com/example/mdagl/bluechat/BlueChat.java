@@ -11,6 +11,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.OkHttp3Downloader;
 
+import java.util.Objects;
+
 
 public class BlueChat extends Application{
 
@@ -34,7 +36,7 @@ public class BlueChat extends Application{
 
         mAuth = FirebaseAuth.getInstance();
         mUserDatabase = FirebaseDatabase.getInstance()
-                .getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+                .getReference().child("Users").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override

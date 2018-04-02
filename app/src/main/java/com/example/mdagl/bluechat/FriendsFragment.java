@@ -1,7 +1,9 @@
 package com.example.mdagl.bluechat;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -95,7 +97,7 @@ public class FriendsFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        String userName = dataSnapshot.child("name").getValue().toString();
+                        final String userName = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumbImage").getValue().toString();
                         String userOnline = dataSnapshot.child("online").getValue().toString();
 
@@ -103,21 +105,41 @@ public class FriendsFragment extends Fragment {
                         friendsViewHolder.setUserImage(userThumb);
                         friendsViewHolder.setUserOnlineStatus(userOnline);
 
+                        friendsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                CharSequence[] options = new CharSequence[]{"Open Profile", "Send Message"};
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Select Options");
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        //Click event for each item
+                                        if (which == 0) {
+                                            Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
+                                            profileIntent.putExtra("user_id", userId);
+                                            startActivity(profileIntent);
+                                        }
+                                        if (which == 1) {
+                                            Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                            chatIntent.putExtra("user_id", userId);
+                                            chatIntent.putExtra("user_name", userName);
+                                            startActivity(chatIntent);
+                                        }
+
+                                    }
+                                });
+
+                                builder.show();
+                            }
+                        });
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-
-                friendsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-/*                        Intent profileIntent = new Intent(FriendsFragment.this, ProfileActivity.class);
-                        profileIntent.putExtra("user_id", userId);
-                        startActivity(profileIntent);*/
                     }
                 });
             }
