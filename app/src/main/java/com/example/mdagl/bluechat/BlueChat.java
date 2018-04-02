@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.OkHttp3Downloader;
@@ -16,12 +17,15 @@ import java.util.Objects;
 
 public class BlueChat extends Application{
 
+    private static BlueChat mInstance;
     private DatabaseReference mUserDatabase;
     private FirebaseAuth mAuth;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mInstance = this;
 
         //Offline using data
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -36,14 +40,16 @@ public class BlueChat extends Application{
 
         mAuth = FirebaseAuth.getInstance();
         mUserDatabase = FirebaseDatabase.getInstance()
-                .getReference().child("Users").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+                .getReference().child("Users").child(mAuth.getCurrentUser().getUid());
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                mUserDatabase.child("online").onDisconnect().setValue(false);
-                mUserDatabase.child("online").setValue(true);
+                if (dataSnapshot != null) {
+                    mUserDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+//                mUserDatabase.child("online").setValue(true);
+                }
             }
 
             @Override
@@ -51,5 +57,8 @@ public class BlueChat extends Application{
 
             }
         });
+    }
+    public static synchronized BlueChat getInstance() {
+        return mInstance;
     }
 }

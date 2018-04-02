@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/offlineTextColor"
     tools:context=".UsersActivity">
 
     <include
@@ -12,36 +13,44 @@
         layout="@layout/app_bar_layout" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lightTextColor"
+        android:orientation="horizontal"
+        android:weightSum="12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/chat_add_image"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_image" />
+            android:layout_weight="2"
+            android:background="@color/lightTextColor"
+            android:padding="10dp"
+            android:src="@drawable/chat_add_image" />
 
         <TextView
             android:id="@+id/chat_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="81dp"
+            android:layout_weight="8"
+            android:paddingStart="10dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="12dp"
             android:text="Text View" />
 
         <ImageButton
             android:id="@+id/chat_send_message"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_weight="2"
+            android:background="@color/lightTextColor"
+            android:padding="10dp"
             android:src="@drawable/send_message" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

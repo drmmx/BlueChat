@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private SectionPagerAdapter mSectionPagerAdapter;
     private TabLayout mTabLayout;
+    private DatabaseReference mRootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            mRootRef = FirebaseDatabase.getInstance().getReference();
+        }
 
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
@@ -54,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser == null) {
             sendToStart();
+        } else {
+            mRootRef.child("Users").child(currentUser.getUid()).child("online").setValue("true");
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            mRootRef.child("Users").child(currentUser.getUid()).child("online").setValue(ServerValue.TIMESTAMP);
         }
     }
 

@@ -39,16 +39,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/user_single_circle_image_view" />
 
-    <TextView
+    <ImageView
         android:id="@+id/user_online_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/online_status"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/online_status"
+        android:src="@drawable/online_status"
+        app:layout_constraintStart_toEndOf="@+id/user_single_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

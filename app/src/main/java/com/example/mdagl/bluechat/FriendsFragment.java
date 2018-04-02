@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -99,11 +102,14 @@ public class FriendsFragment extends Fragment {
 
                         final String userName = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumbImage").getValue().toString();
-                        String userOnline = dataSnapshot.child("online").getValue().toString();
+
+                        if (dataSnapshot.hasChild("online")) {
+                            String userOnline = dataSnapshot.child("online").getValue().toString();
+                            friendsViewHolder.setUserOnlineStatus(userOnline);
+                        }
 
                         friendsViewHolder.setName(userName);
                         friendsViewHolder.setUserImage(userThumb);
-                        friendsViewHolder.setUserOnlineStatus(userOnline);
 
                         friendsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -175,14 +181,11 @@ public class FriendsFragment extends Fragment {
         }
 
         public void setUserOnlineStatus(String onlineStatus) {
-            TextView userOnlineView = (TextView) mView.findViewById(R.id.user_online_status);
-
-            if (onlineStatus.equals("false")) {
-                userOnlineView.setText(R.string.offline_status);
-                userOnlineView.setTextColor(getResources().getColor(R.color.offlineTextColor));
+            ImageView userOnlineView = (ImageView) mView.findViewById(R.id.user_online_status);
+            if (onlineStatus.equals("true")) {
+                userOnlineView.setVisibility(View.VISIBLE);
             } else {
-                userOnlineView.setText(R.string.online_status);
-                userOnlineView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                userOnlineView.setVisibility(View.INVISIBLE);
             }
         }
     }
