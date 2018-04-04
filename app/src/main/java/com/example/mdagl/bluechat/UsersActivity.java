@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListOptions;
@@ -79,11 +80,13 @@ public class UsersActivity extends AppCompatActivity {
                 usersViewHolder.setStatus(users.getStatus());
                 usersViewHolder.setUserImage(users.getThumbImage());
 
-                mUsersDatabase.child(mCurrentUser.getUid()).child("online").addValueEventListener(new ValueEventListener() {
+                mUsersDatabase.child(mCurrentUser.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String userOnline = dataSnapshot.getValue().toString();
-                        usersViewHolder.setUserOnlineStatus(userOnline);
+                        if (dataSnapshot.hasChild("online")) {
+                            String userOnline = dataSnapshot.child("online").getValue().toString();
+                            usersViewHolder.setUserOnlineStatus(userOnline);
+                        }
                     }
 
                     @Override
@@ -135,14 +138,11 @@ public class UsersActivity extends AppCompatActivity {
         }
 
         public void setUserOnlineStatus(String onlineStatus) {
-            TextView userOnlineView = (TextView) mView.findViewById(R.id.user_online_status);
-
-            if (onlineStatus.equals("false")) {
-                userOnlineView.setText(R.string.offline_status);
-                userOnlineView.setTextColor(getResources().getColor(R.color.offlineTextColor));
+            ImageView userOnlineView = (ImageView) mView.findViewById(R.id.user_online_status);
+            if (onlineStatus.equals("true")) {
+                userOnlineView.setVisibility(View.VISIBLE);
             } else {
-                userOnlineView.setText(R.string.online_status);
-                userOnlineView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                userOnlineView.setVisibility(View.INVISIBLE);
             }
         }
     }
