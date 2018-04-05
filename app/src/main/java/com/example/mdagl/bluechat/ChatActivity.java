@@ -5,9 +5,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +42,10 @@ public class ChatActivity extends AppCompatActivity {
     private TextView mLastSeenView;
     private CircleImageView mProfileImage;
 
+    private ImageButton mChatAddBtn;
+    private ImageButton mChatSendBtn;
+    private EditText mChatMessageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +74,10 @@ public class ChatActivity extends AppCompatActivity {
         mTitleView = (TextView) findViewById(R.id.chat_bar_single_name);
         mLastSeenView = (TextView) findViewById(R.id.chat_bar_last_seen);
         mProfileImage = (CircleImageView) findViewById(R.id.custom_bar_image);
+
+        mChatAddBtn = (ImageButton) findViewById(R.id.chat_add_btn);
+        mChatSendBtn = (ImageButton) findViewById(R.id.chat_send_btn);
+        mChatMessageView = (EditText) findViewById(R.id.chat_message_view);
 
         mTitleView.setText(userName);
         mRootDatabase.child("Users").child(mChatUserId).addValueEventListener(new ValueEventListener() {
@@ -127,5 +138,45 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        mChatSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage();
+            }
+        });
+
+    }
+
+    private void sendMessage() {
+
+        String message = mChatMessageView.getText().toString();
+        if (!TextUtils.isEmpty(message)) {
+
+            String currentUserRef = "messages/" + mCurrentUserId + "/" + mChatUserId;
+            String chatUserRef = "messages/" + mChatUserId + "/" + mCurrentUserId;
+
+            DatabaseReference userMessagePush = mRootDatabase.child("messages").child(mCurrentUserId)
+                    .child(mChatUserId).push();
+            String pushId = userMessagePush.getKey();
+
+            Map<String, Object> messageMap = new HashMap<>();
+            messageMap.put("message", message);
+            messageMap.put("seen", false);
+            messageMap.put("type", "text");
+            messageMap.put("time", ServerValue.TIMESTAMP);
+
+            Map<String, Object> messageUserMap = new HashMap<>();
+            messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
+            messageUserMap.put(chatUserRef + "/" + pushId, messageMap);
+
+            mRootDatabase.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        Log.d("CHAT_LOG", databaseError.getMessage());
+                    }
+                }
+            });
+        }
     }
 }
