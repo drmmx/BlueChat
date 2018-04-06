@@ -4,16 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/offlineTextColor"
+    android:orientation="vertical"
     tools:context=".UsersActivity">
 
     <include
         android:id="@+id/chat_app_bar"
         layout="@layout/app_bar_layout" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_app_bar">
+
+    </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lightTextColor"
