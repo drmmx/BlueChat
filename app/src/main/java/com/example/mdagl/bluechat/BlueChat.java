@@ -50,7 +50,6 @@ public class BlueChat extends Application{
 
                     if (dataSnapshot != null) {
                         mUserDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
-    //                mUserDatabase.child("online").setValue(true);
                     }
                 }
 

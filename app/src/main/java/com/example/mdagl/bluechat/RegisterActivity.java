@@ -90,7 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
                             userMap.put("image", "default");
                             userMap.put("thumbImage", "default");
                             userMap.put("device_token", deviceToken);
-                            userMap.put("online", "true");
 
                             mDatabaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

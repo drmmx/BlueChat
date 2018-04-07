@@ -91,8 +91,6 @@ public class FriendsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final FriendsFragment.FriendsViewHolder friendsViewHolder, int position, @NonNull Friends friends) {
                 friendsViewHolder.setDate(friends.getDate());
-/*                friendsViewHolder.setStatus(friends.getStatus());
-                friendsViewHolder.setUserImage(friends.getThumbImage());*/
 
                 final String userId = getRef(position).getKey();
 

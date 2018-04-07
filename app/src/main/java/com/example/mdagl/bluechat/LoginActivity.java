@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class LoginActivity extends AppCompatActivity {
@@ -67,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        /*if (mAuth.getCurrentUser() == null) {
+            mUserDatabase.child("online").setValue(ServerValue.TIMESTAMP);
+        }*/
     }
 
     private void loginUser(String email, String password) {
