@@ -7,12 +7,12 @@ public class Messages {
     private long time;
     private boolean seen;
 
-    public Messages(String message, String type, long time, boolean seen) {
+    public Messages(String message, String type, long time, boolean seen, String from) {
         this.message = message;
         this.time = time;
         this.type = type;
         this.seen = seen;
-//        this.from = from;
+        this.from = from;
     }
 
     public Messages() {
@@ -50,11 +50,11 @@ public class Messages {
         this.type = type;
     }
 
-/*    public String getFrom() {
+    public String getFrom() {
         return from;
     }
 
     public void setFrom(String from) {
         this.from = from;
-    }*/
+    }
 }

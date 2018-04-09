@@ -155,7 +155,6 @@ public class FriendsFragment extends Fragment {
     public class FriendsViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        Context mContext;
 
         FriendsViewHolder(View itemView) {
             super(itemView);

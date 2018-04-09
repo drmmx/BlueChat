@@ -42,7 +42,7 @@ import id.zelory.compressor.Compressor;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private static final String TAG = "My tag";
+    private static final String TAG = "Settings Activity LOG";
     private static final int GALLERY_PICK = 1;
 
     //Firebase
