@@ -48,6 +48,8 @@
         <activity
             android:name=".UsersActivity"
             android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".ProfileActivity">
             <intent-filter>

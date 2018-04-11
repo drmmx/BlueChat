@@ -36,5 +36,6 @@
     <string name="channel_description">New friend request</string>
     <string name="chat_bar_last_seen">Last Seen</string>
     <string name="chat_enter_message">Enter Message…</string>
+    <string name="search_menu">Search</string>
 
 </resources>
