@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -34,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
+    private ProgressBar mProgressBar;
+
     //Firebase
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
@@ -50,6 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Create Account");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mProgressBar = (ProgressBar) findViewById(R.id.register_progressbar);
+
         mDisplayName = (TextInputLayout) findViewById(R.id.reg_name);
         mEmail = (TextInputLayout) findViewById(R.id.reg_e_mail);
         mPassword = (TextInputLayout) findViewById(R.id.reg_pass);
@@ -65,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(displayNameText) || !TextUtils.isEmpty(emailText) || !TextUtils.isEmpty(passwordText)) {
                     registerUser(displayNameText, emailText, passwordText);
+                    mProgressBar.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -78,6 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            mProgressBar.setVisibility(View.GONE);
 
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = currentUser.getUid();
@@ -107,6 +115,8 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Cannot register user. Please check the form and try again", Toast.LENGTH_SHORT).show();
+
+                            mProgressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });

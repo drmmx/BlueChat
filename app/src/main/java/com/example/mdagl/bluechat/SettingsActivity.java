@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
+    private ProgressBar mProgressBar;
+
     private CircleImageView mDisplayImage;
     private TextView mDisplayName;
     private TextView mDisplayStatus;
@@ -68,6 +71,8 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.settings_progressbar);
 
         mDisplayImage = (CircleImageView) findViewById(R.id.settings_image);
         mDisplayName = (TextView) findViewById(R.id.settings_display_name);
@@ -161,6 +166,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
+                mProgressBar.setVisibility(View.VISIBLE);
+
                 //crop image uri
                 Uri resultUri = result.getUri();
 
@@ -211,20 +218,25 @@ public class SettingsActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
+
+                                                    mProgressBar.setVisibility(View.GONE);
                                                     Toast.makeText(SettingsActivity.this, "Success uploading image", Toast.LENGTH_LONG).show();
                                                 } else {
+                                                    mProgressBar.setVisibility(View.INVISIBLE);
                                                     Toast.makeText(SettingsActivity.this, "Error uploading image", Toast.LENGTH_LONG).show();
                                                 }
                                             }
                                         });
 
                                     } else {
+                                        mProgressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(SettingsActivity.this, "Error uploading thumbnail", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
 
                         } else {
+                            mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(SettingsActivity.this, "Error save image in database", Toast.LENGTH_LONG).show();
                         }
                     }

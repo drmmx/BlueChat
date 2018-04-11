@@ -62,8 +62,8 @@ public class UsersActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseRecyclerOptions<Users> options = new FirebaseRecyclerOptions.Builder<Users>()
-                        .setQuery(mUsersDatabase, Users.class)
-                        .build();
+                .setQuery(mUsersDatabase, Users.class)
+                .build();
 
         FirebaseRecyclerAdapter firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(options) {
 
@@ -76,6 +76,14 @@ public class UsersActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final UsersViewHolder usersViewHolder, int position, @NonNull Users users) {
+                final String userId = getRef(position).getKey();
+
+                //hide current user from recycler view
+                if (userId.equals(mCurrentUser.getUid())) {
+                    usersViewHolder.mView.setVisibility(View.GONE);
+                }
+
+                //add elements to recycler view
                 usersViewHolder.setName(users.getName());
                 usersViewHolder.setStatus(users.getStatus());
                 usersViewHolder.setUserImage(users.getThumbImage());
@@ -96,7 +104,6 @@ public class UsersActivity extends AppCompatActivity {
                 });
 
 
-                final String userId = getRef(position).getKey();
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

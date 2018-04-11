@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mLoginPassword;
     private Button mLoginBtn;
 
+    private ProgressBar mProgressBar;
+
     private DatabaseReference mUserDatabase;
 
     @Override
@@ -55,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         mLoginPassword = (TextInputLayout) findViewById(R.id.login_pass);
         mLoginBtn = (Button) findViewById(R.id.login_btn);
 
+        mProgressBar = (ProgressBar) findViewById(R.id.login_progressbar);
+
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)) {
                     loginUser(email, password);
+
+                    mProgressBar.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -81,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            mProgressBar.setVisibility(View.GONE);
                             Log.d(TAG, "signInWithEmail:success");
 
                             //save user token and back to MainActivity
@@ -102,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Cannot Sign in. Please check the form and try again", Toast.LENGTH_SHORT).show();
+
+                            mProgressBar.setVisibility(View.INVISIBLE);
                         }
 
                         // ...
