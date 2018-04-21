@@ -81,9 +81,9 @@ public class UsersActivity extends AppCompatActivity {
                 final String userId = getRef(position).getKey();
 
                 //hide current user from recycler view
-                if (userId.equals(mCurrentUser.getUid())) {
+/*                if (userId.equals(mCurrentUser.getUid())) {
                     usersViewHolder.mView.setVisibility(View.GONE);
-                }
+                }*/
 
                 //add elements to recycler view
                 usersViewHolder.setName(users.getName());

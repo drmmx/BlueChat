@@ -46,8 +46,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private static final int GALLERY_PICK = 1;
 
-    private Toolbar mToolbar;
-
     private String mChatUserId;
 
     private DatabaseReference mRootDatabase;
@@ -91,8 +89,8 @@ public class ChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
 
-        mToolbar = (Toolbar) findViewById(R.id.chat_app_bar);
-        setSupportActionBar(mToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.chat_app_bar);
+        setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
 

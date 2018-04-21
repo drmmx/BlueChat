@@ -16,15 +16,12 @@ class SectionPagerAdapter extends FragmentPagerAdapter{
 
         switch (position) {
             case 0:
-                RequestsFragment requestsFragment = new RequestsFragment();
-                return requestsFragment;
+                return new RequestsFragment();
             case 1:
-                ChatsFragment chatsFragment = new ChatsFragment();
-                return chatsFragment;
+                return new ChatsFragment();
 
             case 2:
-                FriendsFragment friendsFragment = new FriendsFragment();
-                return friendsFragment;
+                return new FriendsFragment();
 
             default:
                 return null;

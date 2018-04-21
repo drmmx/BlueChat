@@ -19,11 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth;
-
-    private Toolbar mToolbar;
-    private ViewPager mViewPager;
-    private SectionPagerAdapter mSectionPagerAdapter;
-    private TabLayout mTabLayout;
     private DatabaseReference mRootRef;
 
     @Override
@@ -36,19 +31,21 @@ public class MainActivity extends AppCompatActivity {
             mRootRef = FirebaseDatabase.getInstance().getReference();
         }
 
-        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.app_name);
 
-        mViewPager = (ViewPager) findViewById(R.id.main_tab_pager);
-        mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionPagerAdapter);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.main_tab_pager);
+        SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(sectionPagerAdapter);
 
-        mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
-        mTabLayout.setupWithViewPager(mViewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 //        mTabLayout.setTabTextColors(R.color.secondaryTextColor, R.color.darkTextColor);
-        TabLayout.Tab tab = mTabLayout.getTabAt(1);
-        tab.select();
+        TabLayout.Tab tab = tabLayout.getTabAt(1);
+        if (tab != null) {
+            tab.select();
+        }
     }
 
     @Override
